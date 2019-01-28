@@ -1,0 +1,73 @@
+<head>
+    <script src="https://fb.me/react-0.14.3.js"></script>
+    <script src="https://fb.me/react-dom-0.14.3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous"
+    />
+</head>
+<body>
+    <div class="container"></div>
+</body>
+<script type="text/jsx">
+    // define a react component class
+    var Badge = React.createClass({
+      render: function() {
+        return <button type="button" className="btn btn-primary">
+          {this.props.title} <span className="badge badge-light">{this.props.number}</span>
+        </button>
+      }
+    });
+
+    var Card = React.createClass({
+      render: function() {
+        return <div className="col-sm-6 col-md-4">
+          <div className="card">
+            <img src={this.props.imageUrl} className="card-img-top" />
+            <div className="card-body">
+              <h5 className="card-title">{this.props.header}</h5>
+              <p className="card-text">{this.props.description}</p>
+              <Badge title={this.props.title} number={this.props.number} />
+            </div>
+          </div>
+        </div>
+      }
+    });
+
+    var CardList = React.createClass({
+      render: function() {
+        var list = this.props.cardData.map(cardProps => {
+          return <Card {...cardProps} />
+        });
+        return <div>
+          {list}
+        </div>
+      }
+    });
+
+    var options = {
+      cardData: [{
+        title: 'See Tutorials',
+        number: 32,
+        header: 'Learn React',
+        description: 'React is a fantastic new library for making fast, dynamic pages.',
+        imageUrl: 'https://formatjs.io/img/react.svg'
+      }, {
+        title: 'See Tutorials',
+        number: 25,
+        header: 'Learn Gulp',
+        description: 'Gulp will speed up your development workflow.',
+        imageUrl: 'https://raw.githubusercontent.com/gulpjs/artwork/master/gulp-2x.png'
+      }]
+    };
+
+    // ask react to render this class
+    var element = React.createElement(CardList, options);
+
+    // when we ask to render this class, we will tell it
+    // where to place the rendered element in the dome
+    ReactDOM.render(element, document.querySelector('.container'));
+</script>
